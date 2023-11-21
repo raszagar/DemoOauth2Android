@@ -10,7 +10,10 @@ import com.mkiperszmid.emptyapp.home.HomeViewModel
 import com.mkiperszmid.emptyapp.home.ProductService
 import com.mkiperszmid.emptyapp.login.LoginScreen
 import com.mkiperszmid.emptyapp.login.LoginViewModel
+import com.mkiperszmid.emptyapp.saludo.ApiGraphService
 import com.mkiperszmid.emptyapp.saludo.ApiSaludoService
+import com.mkiperszmid.emptyapp.saludo.GraphScreen
+import com.mkiperszmid.emptyapp.saludo.GraphViewModel
 import com.mkiperszmid.emptyapp.saludo.SaludoScreen
 import com.mkiperszmid.emptyapp.saludo.SaludoViewModel
 
@@ -36,6 +39,13 @@ fun AppNavigation(
                 LoginScreen(navController, loginViewModel, activity)
             } else {
                 SaludoScreen(navController, SaludoViewModel(ApiSaludoService.instance))
+            }
+        }
+        composable(route = AppScreens.GraphScreen.route) {
+            if(loginViewModel.authenticated == null){
+                LoginScreen(navController, loginViewModel, activity)
+            } else {
+                GraphScreen(navController, GraphViewModel(ApiGraphService.instance))
             }
         }
     }

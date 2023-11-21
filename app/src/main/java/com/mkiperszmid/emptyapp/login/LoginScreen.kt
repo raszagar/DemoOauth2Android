@@ -85,6 +85,15 @@ fun BodyContent(
             Text(text = "Api Saludo screen")
         }
 
+        Button(
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            onClick = {
+                navController.navigate(AppScreens.GraphScreen.route)
+            }
+        ) {
+            Text(text = "Api Graph screen")
+        }
+
     }
 
 }

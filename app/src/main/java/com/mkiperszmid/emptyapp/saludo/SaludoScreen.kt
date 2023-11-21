@@ -46,9 +46,6 @@ fun SaludoScreen(
     }
 }
 
-val salidaTest = mutableStateOf("....")
-val salidaTestAuth = mutableStateOf("....")
-
 @Composable
 fun BodyContent(navController: NavController, viewModel: SaludoViewModel) {
     val state = viewModel.state
@@ -62,6 +59,13 @@ fun BodyContent(navController: NavController, viewModel: SaludoViewModel) {
             modifier = Modifier.align(Alignment.End)
         ){
             Button(
+                onClick = {
+                    navController.navigate(route = AppScreens.LoginScreen.route)
+                }
+            ) {
+                Text(text = "Ir Login")
+            }
+            Button(
                 modifier = Modifier.padding(horizontal = 10.dp),
                 onClick = {
                     navController.navigate(route = AppScreens.HomeScreen.route)
@@ -71,36 +75,34 @@ fun BodyContent(navController: NavController, viewModel: SaludoViewModel) {
             }
             Button(
                 onClick = {
-                    navController.navigate(route = AppScreens.LoginScreen.route)
+                    navController.navigate(route = AppScreens.GraphScreen.route)
                 }
             ) {
-                Text(text = "Ir Login")
+                Text(text = "Ir Graph")
             }
         }
 
         Text(text = "Prueba de la API", fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
 
         Button(onClick = {
-            viewModel.test(salidaTest)
+            viewModel.test()
         }) {
             Text(text = "Test")
         }
 
-        val salidaTest1 by salidaTest
-        Text(salidaTest1)
+        Text(viewModel.salida.value)
 
         Button(onClick = {
-            viewModel.getSaludo(salidaTestAuth)
+            viewModel.getSaludo()
         }) {
             Text(text = "Saludo")
         }
 
-        val salidaTest2 by salidaTestAuth
-        Text(salidaTest2)
+        Text(viewModel.salida2.value)
 
         Button(onClick = {
-            salidaTest.value = "...."
-            salidaTestAuth.value = "...."
+            viewModel.salida.value = "...."
+            viewModel.salida2.value = "...."
         }) {
             Text(text = "Limpiar salida")
         }

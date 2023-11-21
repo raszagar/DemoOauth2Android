@@ -1,19 +1,32 @@
 package com.mkiperszmid.emptyapp.login
 
+import android.util.Log
 import com.mkiperszmid.emptyapp.EmptyApp
 import okhttp3.Interceptor
 import okhttp3.Protocol
+import okhttp3.Request
 import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
 
-class AuthenticationInterceptor() : Interceptor {
+class AuthenticationInterceptor(
+    private val tokenScope: String
+) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         println("Estoy aki en el interceptor")
-        val requestBuilder = chain.request().newBuilder()
+
+        Log.d("AUTH","Interceptando peticion, agregando token")
+        Log.d("AUTH","Url: "+chain.request().url.encodedPath)
+
+        //Obtenemos el token
         val context = EmptyApp.instance!!
-        println("We have an OkHttp request:  ${chain.request().method} : ${chain.request().url})")
+        val access_token : String = MSALAuth.getToken(context, tokenScope)
+
+        //Obtenemos la request
+        var request: Request = chain.request()
+        var requestBuilder:Request.Builder = request.newBuilder()
+
         requestBuilder.addHeader(
-            "authorization", "Bearer ${MSALAuth.getToken(context)}"
+            "Authorization", "Bearer $access_token"
         )
 
         return try {

@@ -17,6 +17,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+const val TOKEN_SCOPE_API = "api://f92863b8-16ec-45b6-851f-b2042ee928be/ApiPrueba"
+
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
     var authenticated: IAccount? = null
 
@@ -25,7 +27,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
             viewModelScope.launch {
                 withContext(Dispatchers.IO) {
                     val alreadyLoggedIn =
-                        MSALAuth.checkLogin(activity, getAuthInteractiveCallback(), true)
+                        MSALAuth.checkLogin(activity, getAuthInteractiveCallback(), true, tokenScope = TOKEN_SCOPE_API)
                     if (alreadyLoggedIn) {
                         println("username: ${MSALAuth.account!!.username}")
                         println("idToken: ${MSALAuth.account!!.idToken}")
@@ -41,7 +43,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
             viewModelScope.launch {
                 withContext(Dispatchers.IO) {
                     var authBool =
-                        MSALAuth.checkLogin(activity, getAuthInteractiveCallback(), false)
+                        MSALAuth.checkLogin(activity, getAuthInteractiveCallback(), false, tokenScope = TOKEN_SCOPE_API)
 
                     println("authBool: $authBool")
                     //println("username: ${MSALAuth.account!!.username}")

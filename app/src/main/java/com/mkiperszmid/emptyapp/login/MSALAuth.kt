@@ -12,7 +12,8 @@ import com.microsoft.identity.client.SignInParameters
 import com.microsoft.identity.client.SilentAuthenticationCallback
 import com.mkiperszmid.emptyapp.R
 
-const val TOKEN_SCOPE = "api://0e95c0f9-e032-47de-8271-********/ApiPrueba"
+//const val TOKEN_SCOPE_API = "api://6b5960fa-d8fb-4900-a703-**********/ApiPrueba"
+//const val TOKEN_SCOPE_GRAPH = "https://graph.microsoft.com/.default"
 
 class MSALAuth {
     companion object {
@@ -22,8 +23,10 @@ class MSALAuth {
         fun checkLogin(
             activity: Activity,
             callback: AuthenticationCallback,
-            actuallyLogin: Boolean
+            actuallyLogin: Boolean,
+            tokenScope: String
         ): Boolean {
+            println("usando scope: " + tokenScope)
             singleAccountApp = PublicClientApplication.createSingleAccountPublicClientApplication(
                 activity,
                 R.raw.auth_config_single_account
@@ -33,7 +36,7 @@ class MSALAuth {
             return if (account == null) {
                 if (actuallyLogin) {
                     val params = SignInParameters.builder().withActivity(activity).withScope(
-                        TOKEN_SCOPE
+                        tokenScope
                     ).withCallback(callback).build()
                     singleAccountApp.signIn(params)
                 }
@@ -44,9 +47,10 @@ class MSALAuth {
         }
 
         //callback: SilentAuthenticationCallback
-        fun getToken(context: Context): String {
+        fun getToken(context: Context, tokenScope: String): String {
             try {
                 println("Getting Token from MSAL")
+                println("Usando scope: " + tokenScope)
                 if (account == null) {
                     singleAccountApp =
                         PublicClientApplication.createSingleAccountPublicClientApplication(
@@ -58,7 +62,7 @@ class MSALAuth {
                 }
                 println("About to get token silently.")
                 val authResult = singleAccountApp.acquireTokenSilent(
-                    getTokenParams(TOKEN_SCOPE)
+                    getTokenParams(tokenScope)
                 )!!
                 println("MSAL Token retrieved.")
                 println("Token: " + authResult.accessToken)

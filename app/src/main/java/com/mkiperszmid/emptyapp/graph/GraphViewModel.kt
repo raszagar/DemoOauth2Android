@@ -6,12 +6,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mkiperszmid.emptyapp.graph.Datos
 import kotlinx.coroutines.launch
 
-class SaludoViewModel(
-    private val  apiSaludo: ApiSaludoService
+class GraphViewModel(
+    private val  apiGraph: ApiGraphService
 ) : ViewModel() {
-    var state by mutableStateOf(SaludoState())
+    var state by mutableStateOf(GraphState())
         private set
 
     init {
@@ -19,26 +20,16 @@ class SaludoViewModel(
     }
 
     val salida:MutableState<String> = mutableStateOf("....")
-    val salida2:MutableState<String> = mutableStateOf("....")
 
-    fun test() {
+    fun datos() {
         viewModelScope.launch {
             try {
-                salida.value = apiSaludo.test()
+                var datos:Datos = apiGraph.datos()
+                println(datos)
+                salida.value = datos.toString()
             } catch (e: Exception) {
                 println("Error: " + e.message)
                 salida.value = "Error: " + e.message
-            }
-        }
-    }
-
-    fun getSaludo() {
-        viewModelScope.launch {
-            try {
-                salida2.value = apiSaludo.getSaludo()
-            } catch (e: Exception) {
-                println("Error: " + e.message)
-                salida2.value = "Error: " + e.message
             }
         }
     }
