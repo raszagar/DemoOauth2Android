@@ -62,13 +62,12 @@ class HomeViewModel(
     }
 
     fun createProduct() {
-        val product =
-            ProductDto(
-                state.productName,
-                state.productPrice.toDouble()
-            )
         viewModelScope.launch {
             try {
+                val product = ProductDto(
+                        state.productName,
+                        state.productPrice.toDouble()
+                    )
                 if(state.productId == null){
                     productService.insertProduct(product)
                 } else {

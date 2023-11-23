@@ -1,9 +1,9 @@
 package com.mkiperszmid.emptyapp.home
 
-import com.squareup.moshi.Json
+import com.google.gson.annotations.SerializedName
 
 data class Product(
-    @field:Json(name = "_id")
+    @SerializedName("_id")
     val id: String,
     val name: String,
     val price: Double

@@ -12,7 +12,7 @@ class AuthenticationInterceptor(
     private val tokenScope: String
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        println("Estoy aki en el interceptor")
+        println("Estoy en el interceptor")
 
         Log.d("AUTH","Interceptando peticion, agregando token")
         Log.d("AUTH","Url: "+chain.request().url.encodedPath)

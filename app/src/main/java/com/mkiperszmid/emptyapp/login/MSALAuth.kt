@@ -12,9 +12,6 @@ import com.microsoft.identity.client.SignInParameters
 import com.microsoft.identity.client.SilentAuthenticationCallback
 import com.mkiperszmid.emptyapp.R
 
-//const val TOKEN_SCOPE_API = "api://6b5960fa-d8fb-4900-a703-**********/ApiPrueba"
-//const val TOKEN_SCOPE_GRAPH = "https://graph.microsoft.com/.default"
-
 class MSALAuth {
     companion object {
         private lateinit var singleAccountApp: ISingleAccountPublicClientApplication

@@ -2,10 +2,6 @@ package com.mkiperszmid.emptyapp.login
 
 import android.app.Activity
 import android.app.Application
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.microsoft.identity.client.AuthenticationCallback
@@ -13,11 +9,10 @@ import com.microsoft.identity.client.IAccount
 import com.microsoft.identity.client.IAuthenticationResult
 import com.microsoft.identity.client.ISingleAccountPublicClientApplication.SignOutCallback
 import com.microsoft.identity.client.exception.MsalException
+import com.mkiperszmid.emptyapp.constantes.Constantes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-
-const val TOKEN_SCOPE_API = "api://f92863b8-16ec-45b6-851f-b2042ee928be/ApiPrueba"
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
     var authenticated: IAccount? = null
@@ -27,7 +22,8 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
             viewModelScope.launch {
                 withContext(Dispatchers.IO) {
                     val alreadyLoggedIn =
-                        MSALAuth.checkLogin(activity, getAuthInteractiveCallback(), true, tokenScope = TOKEN_SCOPE_API)
+                        MSALAuth.checkLogin(activity, getAuthInteractiveCallback(), true,
+                            tokenScope = Constantes.TOKEN_SCOPE_API)
                     if (alreadyLoggedIn) {
                         println("username: ${MSALAuth.account!!.username}")
                         println("idToken: ${MSALAuth.account!!.idToken}")
@@ -43,7 +39,8 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
             viewModelScope.launch {
                 withContext(Dispatchers.IO) {
                     var authBool =
-                        MSALAuth.checkLogin(activity, getAuthInteractiveCallback(), false, tokenScope = TOKEN_SCOPE_API)
+                        MSALAuth.checkLogin(activity, getAuthInteractiveCallback(), false,
+                            tokenScope = Constantes.TOKEN_SCOPE_API)
 
                     println("authBool: $authBool")
                     //println("username: ${MSALAuth.account!!.username}")

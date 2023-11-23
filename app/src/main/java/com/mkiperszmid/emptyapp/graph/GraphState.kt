@@ -1,4 +1,4 @@
-package com.mkiperszmid.emptyapp.saludo
+package com.mkiperszmid.emptyapp.graph
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf

@@ -2,6 +2,7 @@ package com.mkiperszmid.emptyapp.login
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.*
@@ -9,11 +10,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.mkiperszmid.emptyapp.EmptyApp
+import com.mkiperszmid.emptyapp.MainActivity
 import com.mkiperszmid.emptyapp.navigation.AppScreens
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun LoginScreen(
     navController: NavController,
@@ -27,7 +32,7 @@ fun LoginScreen(
                 Text(text = "Login Screen")
             }
         }
-    ) {
+    ) { it
         BodyContent(navController, loginViewModel, activity)
     }
 }
@@ -96,4 +101,11 @@ fun BodyContent(
 
     }
 
+}
+
+@Preview
+@Composable
+fun LoginScreenPreview() {
+    val loginViewModel = viewModel<LoginViewModel>()
+    LoginScreen(rememberNavController(), loginViewModel, null)
 }

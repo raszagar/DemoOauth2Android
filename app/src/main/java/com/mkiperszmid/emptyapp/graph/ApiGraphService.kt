@@ -1,31 +1,38 @@
-package com.mkiperszmid.emptyapp.saludo
+package com.mkiperszmid.emptyapp.graph
 
-import com.mkiperszmid.emptyapp.graph.Datos
+import com.mkiperszmid.emptyapp.constantes.Constantes
 import com.mkiperszmid.emptyapp.login.AuthenticationInterceptor
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.Interceptor.*
 import okhttp3.OkHttpClient
+import okhttp3.ResponseBody
+import retrofit2.Call
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
-
-const val TOKEN_SCOPE_GRAPH = "https://graph.microsoft.com/.default"
+import java.util.concurrent.TimeUnit
 
 interface ApiGraphService {
     companion object {
-        var client: OkHttpClient = OkHttpClient.Builder().addInterceptor(AuthenticationInterceptor(TOKEN_SCOPE_GRAPH)).build()
-
-        private val moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
+        var client: OkHttpClient = OkHttpClient.Builder()
+            .addInterceptor(AuthenticationInterceptor(Constantes.TOKEN_SCOPE_GRAPH))
+            .readTimeout(20, TimeUnit.SECONDS)
+            .connectTimeout(20, TimeUnit.SECONDS)
+            .build()
 
         val instance = Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
             .baseUrl("https://graph.microsoft.com/v1.0/")
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(client)
             .build().create(ApiGraphService::class.java)
     }
 
     @GET("me")
-    suspend fun datos(): Datos
+    fun datos(): Call<Datos>
+
+    @GET("me/photo")
+    fun datosFoto(): Call<ResponseBody>
+
+    @GET("me/photo/\$value")
+    fun verFoto(): Call<ResponseBody>
 
 }

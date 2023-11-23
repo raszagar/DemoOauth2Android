@@ -2,7 +2,7 @@ package com.mkiperszmid.emptyapp.home
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -13,8 +13,8 @@ import retrofit2.http.Path
 interface ProductService {
     companion object {
         //Coger el id de la api en la pagina https://crudcrud.com/
-        val instance = Retrofit.Builder().baseUrl("https://crudcrud.com/api/520aa30e70a44f25afbdc564909b56dc/")
-            .addConverterFactory(MoshiConverterFactory.create())
+        val instance = Retrofit.Builder().baseUrl("https://crudcrud.com/api/5ec7c8dbaa1f45cdaac3424911c56be6/")
+            .addConverterFactory(GsonConverterFactory.create())
             .client(OkHttpClient.Builder().build())
             .build().create(ProductService::class.java)
     }
