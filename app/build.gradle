@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace 'com.mkiperszmid.emptyapp'
+    namespace 'es.jose.emptyapp'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.mkiperszmid.emptyapp"
+        applicationId "es.jose.emptyapp"
         minSdk 24
         targetSdk 33
         versionCode 1

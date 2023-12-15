@@ -1,13 +1,13 @@
 {
   "client_id" : "f92863b8-16ec-45b6-851f-**********",
   "authorization_user_agent" : "DEFAULT",
-  "redirect_uri" : "joseapp://com.mkiperszmid.emptyapp",
+  "redirect_uri" : "joseapp://es.jose.emptyapp",
   "account_mode" : "SINGLE",
   "broker_redirect_uri_registered": true,
   "authorities" : [
     {
       "type": "AAD",
-      "authority_url": "https://login.microsoftonline.com/bdf029de-3bb7-4f38-b6c4-**********"
+      "authority_url": "https://login.microsoftonline.com/bdf029de-3bb7-4f38-b6c4-********"
     }
   ]
 }
