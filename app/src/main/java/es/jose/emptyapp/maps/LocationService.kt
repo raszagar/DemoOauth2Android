@@ -21,7 +21,6 @@ class LocationService {
             )
 
         if(!isGpsEnabled || !tienePermisosLocalizacion) {
-            Toast.makeText(context, "Debe conceder permiso de Ubiación", Toast.LENGTH_SHORT).show()
             return null
         }
 

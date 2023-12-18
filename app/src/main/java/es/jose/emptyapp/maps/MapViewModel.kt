@@ -13,6 +13,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.CameraPositionState
+import com.google.maps.android.compose.MarkerState
 import es.jose.emptyapp.EmptyApp
 import kotlinx.coroutines.launch
 
@@ -40,7 +41,7 @@ class MapViewModel(
         state.coordenadasMarker.value = latLng
     }
 
-    fun getCoordenadasGPS() {
+    fun getCoordenadasGPS(marcadorGpsState: MarkerState) {
         viewModelScope.launch {
             try {
                 println("obteniendo informacion gps")
@@ -50,6 +51,7 @@ class MapViewModel(
                 if(result != null) {
                     Log.d("INFO", "Coordenadas gps -> Latitud ${result.latitude} y longitud ${result.longitude}")
                     state.coordenadasGPS.value = LatLng(result.latitude, result.longitude)
+                    marcadorGpsState.position = LatLng(result.latitude, result.longitude)
                 }
             } catch (e: Exception) {
                 println("Error: " + e.message)
@@ -77,4 +79,12 @@ class MapViewModel(
         }
     }
 
+    fun reiniciarMarcador(marcadorState: MarkerState) {
+        marcadorState.position = coordenadasMarker
+    }
+
+    fun getCoordenadasMarcadorGps(latLng: LatLng) {
+        println(latLng)
+        state.coordenadasMarkerGps.value = latLng
+    }
 }

@@ -21,7 +21,6 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,13 +36,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
-import es.jose.emptyapp.loading.LoadingScreen
 import es.jose.emptyapp.navigation.AppScreens
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -123,6 +122,7 @@ fun BodyContent(navController: NavController, viewModel: MapViewModel) {
                 position = CameraPosition.fromLatLngZoom(state.coordenadasMapa.value, 18f)
             }
             val coordenadasMarker = rememberMarkerState(position = viewModel.coordenadasMarker)
+            val coordenadasMarkerGps = rememberMarkerState(position = LatLng(0.0, 0.0))
 
             GoogleMap(
                 modifier = Modifier
@@ -161,6 +161,14 @@ fun BodyContent(navController: NavController, viewModel: MapViewModel) {
                     snippet = "Marcador para mover",
                     draggable = true
                 )
+
+                //Marcador de GPS que se puede mover
+                Marker(
+                    state = coordenadasMarkerGps,
+                    title = "Marcador GPS",
+                    snippet = "Marcador GPS para mover",
+                    draggable = true
+                )
             }
 
             Text(text = "Las coordenadas del Marker")
@@ -172,6 +180,14 @@ fun BodyContent(navController: NavController, viewModel: MapViewModel) {
                 }
             ) {
                 Text(text = "Ver coordenadas marcador")
+            }
+
+            Button(
+                onClick = {
+                    viewModel.reiniciarMarcador(coordenadasMarker)
+                }
+            ) {
+                Text(text = "Reiniciar marcador")
             }
 
             Text(text = "Las coordenadas del GPS" )
@@ -186,13 +202,13 @@ fun BodyContent(navController: NavController, viewModel: MapViewModel) {
                         // Precise location access granted.
                         Log.d("INFO", "Hay permisos de ubicacion fina")
                         println("Hay permisos de ubicacion fina")
-                        viewModel.getCoordenadasGPS()
+                        viewModel.getCoordenadasGPS(coordenadasMarkerGps)
                     }
                     permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
                         // Only approximate location access granted.
                         Log.d("INFO", "Hay permisos de ubicacion aproximada")
                         println("Hay permisos de ubicacion aproximada")
-                        viewModel.getCoordenadasGPS()
+                        viewModel.getCoordenadasGPS(coordenadasMarkerGps)
                     }
                     else -> {
                         // No location access granted.
@@ -218,6 +234,18 @@ fun BodyContent(navController: NavController, viewModel: MapViewModel) {
                 }
             ) {
                 Text(text = "Centrar mapa con GPS")
+            }
+
+            Text(text = "Las coordenadas del Marker GPS")
+            Text(text = "Coordenada latitud: " + state.coordenadasMarkerGps.value.latitude)
+            Text(text = "Coordenada longitud: " + state.coordenadasMarkerGps.value.longitude)
+
+            Button(
+                onClick = {
+                    viewModel.getCoordenadasMarcadorGps(coordenadasMarkerGps.position)
+                }
+            ) {
+                Text(text = "Ver coordenadas marcador GPS")
             }
 
             Text(text = "Texto para tener más scroll\nTexto para tener más scroll\nTexto para tener más scroll\n")
