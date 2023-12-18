@@ -71,6 +71,12 @@ dependencies {
         exclude group: 'com.microsoft.device.display'
     }
 
+    //Nuevas librerias para google maps
+    implementation 'com.google.maps.android:maps-compose:4.3.0'
+
+    //Librerias para localizacion GPS
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
