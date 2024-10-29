@@ -1,6 +1,7 @@
 package es.jose.emptyapp
 
 import android.os.Bundle
+import android.preference.PreferenceManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -11,6 +12,7 @@ import androidx.compose.ui.Modifier
 import es.jose.emptyapp.login.LoginViewModel
 import es.jose.emptyapp.navigation.AppNavigation
 import es.jose.emptyapp.ui.theme.EmptyAppTheme
+import org.osmdroid.config.Configuration
 
 class MainActivity : ComponentActivity() {
 
@@ -19,6 +21,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         mainViewModel.checkAuthentication(this)
         super.onCreate(savedInstanceState)
+
+        var appContext = applicationContext
 
         setContent {
             EmptyAppTheme {
@@ -30,6 +34,9 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
+        Configuration.getInstance().load(appContext, PreferenceManager.getDefaultSharedPreferences(appContext))
+        Configuration.getInstance().userAgentValue = "MapApp"
 
     }
 

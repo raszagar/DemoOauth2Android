@@ -104,6 +104,15 @@ fun BodyContent(
             Text(text = "Api Maps screen")
         }
 
+        Button(
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            onClick = {
+                navController.navigate(AppScreens.OpenMapsScreen.route)
+            }
+        ) {
+            Text(text = "Api Open Maps screen")
+        }
+
     }
 
 }

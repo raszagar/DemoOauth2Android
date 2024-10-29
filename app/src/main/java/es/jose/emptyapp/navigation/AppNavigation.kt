@@ -16,6 +16,8 @@ import es.jose.emptyapp.graph.GraphScreen
 import es.jose.emptyapp.graph.GraphViewModel
 import es.jose.emptyapp.maps.MapScreen
 import es.jose.emptyapp.maps.MapViewModel
+import es.jose.emptyapp.openmaps.OpenMapsScreen
+import es.jose.emptyapp.openmaps.OpenMapsViewModel
 import es.jose.emptyapp.saludo.SaludoScreen
 import es.jose.emptyapp.saludo.SaludoViewModel
 
@@ -55,6 +57,13 @@ fun AppNavigation(
                 LoginScreen(navController, loginViewModel, activity)
             } else {
                 MapScreen(navController, MapViewModel())
+            }
+        }
+        composable(route = AppScreens.OpenMapsScreen.route) {
+            if(loginViewModel.authenticated == null){
+                LoginScreen(navController, loginViewModel, activity)
+            } else {
+                OpenMapsScreen(navController, OpenMapsViewModel())
             }
         }
     }
